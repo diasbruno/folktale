@@ -146,6 +146,16 @@ describe('Maybe', () => {
     });
   });
 
+  describe('#alt(b)', () => {
+    property('Just(a).alt(Just(b)) = Just(a)', 'nat', 'nat', (a, b) => {
+      return Just(a).alt(Just(b)).equals(Just(a));
+    });
+
+    property('Nothing().alt(Just(b)) = Just(b)', 'nat', 'nat', (a, b) => {
+      return Nothing().alt(Just(b)).equals(Just(b));
+    });
+  });
+
   describe('Fantasy Land', _ => {
     laws.Setoid(Maybe.Just);
     laws.Setoid(Maybe.Nothing);
@@ -170,5 +180,8 @@ describe('Maybe', () => {
 
     laws.Monad(Maybe.Just);
     laws.Monad(Maybe.Nothing);
+
+    laws.Alt(Maybe.Just);
+    laws.Alt(Maybe.Nothing);
   });
 });

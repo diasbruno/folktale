@@ -199,6 +199,26 @@ const Bifunctor = (type, equals = defaultEquals) => {
   });
 };
 
+const Alt = (type, equals = defaultEquals) => {
+  const { alt, map } = fl;
+
+  describe('Alt instance', _ => {
+    property('associative', 'nat', 'nat', 'nat', (a, b, c) =>
+      equals(
+        type(a)[alt](type(b))[alt](type(c)),
+        type(a)[alt](type(b)[alt](type(c)))
+      )
+    );
+
+    property('distributive', 'nat', 'nat', 'nat -> nat', (a, b, f) =>
+      equals(
+        type(a)[alt](type(b)).map(f),
+        type(a)[map](f)[alt](type(b)[map](f))
+      )
+    );
+  });
+};
+
 
 module.exports = {
   Setoid,
@@ -209,5 +229,6 @@ module.exports = {
   Applicative,
   Chain,
   Monad,
-  Bifunctor
+  Bifunctor,
+  Alt
 };

@@ -242,6 +242,23 @@ adtMethods(Maybe, {
       assertFunction('Maybe.Just#fold', transformJust);
       return transformJust(this.value);
     }
+  },
+
+  /*~
+   * category: Choise
+   * type: |
+   *   forall a, b: (Maybe a).((Maybe a)) => Maybe a
+   */
+  alt: {
+    /*~*/
+    Nothing: function(aMaybe) {
+      return aMaybe;
+    },
+
+    /*~*/
+    Just: function(aMaybe) {
+      return Maybe.of(this.value);
+    }
   }
 });
 
